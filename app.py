@@ -5,7 +5,7 @@ import pickle
 # === Fashionable CSS Styling ===
 st.markdown("""
 <style>
-    /* Import Fonts */
+    
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
@@ -15,7 +15,7 @@ st.markdown("""
         color: #ffffff;
     }
 
-    /* Animated Gradient Title */
+   
     .main-title {
         font-family: 'Orbitron', sans-serif;
         font-size: 3.2rem;
@@ -125,3 +125,4 @@ st.markdown("""
     footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
+
