@@ -41,7 +41,7 @@ st.markdown("""
     .app-container {
         max-width: 480px; /* Typical mobile screen width */
         margin: 0 auto;
-        background-color: #F8F8FF; /* Off-white for the app background */
+        background-color: #F0F2F5; /* Main app background grey */
         min-height: 100vh;
         border-left: 1px solid #dcdce0;
         border-right: 1px solid #dcdce0;
@@ -59,7 +59,7 @@ st.markdown("""
     .app-header {
         position: sticky;
         top: 0;
-        background-color: #F8F8FF;
+        background-color: #F0F2F5; /* Header background to match app background */
         padding: 1rem 1.5rem;
         border-bottom: 1px solid #e0e0e0;
         z-index: 10;
@@ -84,7 +84,7 @@ st.markdown("""
         border-radius: 10px;
         border: 1px solid #c2c2c2;
         box-shadow: none;
-        background-color: #fff;
+        background-color: #FAFAFA; /* Light grey for inputs */
         padding: 1rem 0.75rem;
         font-size: 1.1rem;
         color: #333;
@@ -107,7 +107,7 @@ st.markdown("""
         background-color: #2874f0;
         height: 24px;
         width: 24px;
-        border: 4px solid white;
+        border: 4px solid #F0F2F5; /* Border to match new app background */
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .stSlider .stTrack {
@@ -172,7 +172,7 @@ st.markdown("""
         display: flex;
         justify-content: space-around;
         padding: 0.75rem 0.5rem;
-        background-color: #ffffff;
+        background-color: #FAFAFA; /* Light grey for nav bar */
         border-top: 1px solid #e0e0e0;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         z-index: 100;
@@ -348,3 +348,4 @@ with page_container:
 
 # Close the main app container div
 st.markdown('</div>', unsafe_allow_html=True)
+
