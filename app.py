@@ -185,4 +185,5 @@ elif page == "Contact":
     st.markdown("---")
     st.markdown("- **Developer:** Tejas")
     st.markdown("- **Email:** tejasnarkhede03@gmail.com")
-    st.markdown("- **GitHub:** [github.com/tejasnarkhede2005](https://github.com)")
+    st.markdown("- **GitHub:** [github.com/tejasnarkhede2005](https://github.com/tejasnarkhede2005)")
+
