@@ -24,8 +24,8 @@ st.markdown("""
     /* --- General Body & Layout --- */
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background-color: #EAEDED;
-        color: #0F1111;
+        background-color: #131921; /* Darker background */
+        color: #FFFFFF; /* All text to white */
     }
 
     /* --- Main Content Container --- */
@@ -34,10 +34,12 @@ st.markdown("""
     }
     
     .content-wrapper {
-        background-color: #FEFEFE;
+        background-color: #232F3E; /* Main content box to grey/dark blue */
         padding: 2rem 2.5rem;
         border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        border: 1px solid #3a4553;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        color: #FFFFFF; /* Ensure text inside is white */
     }
 
     /* --- Header --- */
@@ -59,9 +61,10 @@ st.markdown("""
         justify-content: center;
         gap: 1rem;
         margin-bottom: 2.5rem;
-        background-color: #232F3E;
+        background-color: #131921; /* Match header */
         padding: 0.75rem;
         border-radius: 8px;
+        border: 1px solid #3a4553;
     }
     div[role="radiogroup"] label {
         padding: 0.5rem 1.5rem;
@@ -74,8 +77,8 @@ st.markdown("""
     }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) {
-        background-color: #FF9900;
-        color: #131921;
+        background-color: #3a4553; /* Active nav item grey */
+        color: #FFFFFF; /* Active nav text white */
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     div[role="radiogroup"] label:not(:has(input:checked)):hover {
@@ -86,67 +89,80 @@ st.markdown("""
     /* --- Input Widgets Styling --- */
     .stTextInput label, .stNumberInput label, .stSelectbox label {
         font-weight: 600;
-        color: #0F1111;
+        color: #FFFFFF; /* Label text white */
     }
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
     .stSelectbox > div > div {
         border-radius: 8px;
-        border: 1px solid #a6a6a6;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset;
-        background-color: #F0F2F5;
+        border: 1px solid #5a6b7d;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1) inset;
+        background-color: #3a4553; /* Input background grey */
         font-size: 1rem;
+        color: #FFFFFF; /* Input text white */
     }
+    /* Ensure selectbox arrow is visible */
+    .stSelectbox svg {
+        fill: #FFFFFF !important;
+    }
+
     .stTextInput > div > div > input:focus,
     .stNumberInput > div > div > input:focus,
     .stSelectbox > div > div:focus-within {
-        border-color: #E77600;
-        box-shadow: 0 0 0 3px #fcf4e8, 0 1px 2px rgba(0,0,0,0.05) inset;
+        border-color: #FF9900; /* Amazon Orange accent */
+        box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.2);
     }
 
     /* --- Slider Styling --- */
     .stSlider .stThumb {
-        background-color: #E77600;
+        background-color: #FF9900; /* Keep orange accent */
     }
     .stSlider .stTrack {
-        background-color: #a6a6a6;
+        background-color: #5a6b7d;
+    }
+    .stSlider .stSliderLabel, .stSlider .stTickBar > div {
+        color: #FFFFFF !important; /* Make slider numbers white */
     }
     
     /* --- Button Styling --- */
     .stFormSubmitButton > button {
         border-radius: 12px;
-        border: 1px solid #a88734;
+        border: none;
         padding: 0.75rem;
         font-size: 1.2rem;
         font-weight: 700;
-        color: #111;
-        background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+        color: #111; /* Dark text on bright button for contrast */
+        background: #FF9900; /* Solid orange button */
         transition: background 0.2s;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         width: 100%;
     }
     .stFormSubmitButton > button:hover {
-        background: linear-gradient(to bottom, #f5d78e, #eeb933);
+        background: #E77600; /* Darker orange on hover */
     }
     
     /* --- Result & Note Box Styling --- */
     [data-testid="stSuccess"] {
-        background-color: #f2fafa;
-        border: 1px solid #007185;
+        background-color: #3a4553; /* Success box grey */
+        border: 1px solid #4dbd74; /* Green border for success */
         border-radius: 12px;
         padding: 1.5rem;
         text-align: center;
     }
     [data-testid="stSuccess"] strong {
         font-size: 2rem;
-        color: #0F1111;
+        color: #FFFFFF; /* Result text white */
     }
     .note-box {
-        background-color: #f2f7fa;
-        border: 1px solid #c7e3f1;
+        background-color: #3a4553; /* Note box grey */
+        border: 1px solid #5a6b7d;
         border-radius: 12px;
         padding: 1rem;
         margin-top: 1.5rem;
+    }
+    /* Ensure headers within content wrapper are white */
+    .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 {
+        color: #FFFFFF;
     }
 </style>
 """, unsafe_allow_html=True)
