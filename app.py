@@ -35,25 +35,31 @@ dark_theme_css = """
 
     body { background-color: #131921; color: #FFFFFF; }
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
-    .content-wrapper { background-color: #232F3E; padding: 2rem 2.5rem; border-radius: 8px; border: 1px solid #3a4553; box-shadow: 0 4px 12px rgba(0,0,0,0.2); color: #FFFFFF; }
+    
+    /* Removed the .content-wrapper class as it's no longer used */
+
     div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
     div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #a6b3bf; }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #3a4553; color: #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #3a4553; color: #FFFFFF; }
+    
     .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #FFFFFF; }
     .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #5a6b7d; box-shadow: 0 1px 2px rgba(0,0,0,0.1) inset; background-color: #3a4553; font-size: 1rem; color: #FFFFFF; }
     .stSelectbox svg { fill: #FFFFFF !important; }
     .stTextInput > div > div > input:focus, .stNumberInput > div > div > input:focus, .stSelectbox > div > div:focus-within { border-color: #FF9900; box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.2); }
+    
     .stSlider .stThumb { background-color: #FF9900; }
     .stSlider .stTrack { background-color: #5a6b7d; }
     .stSlider .stSliderLabel, .stSlider .stTickBar > div { color: #FFFFFF !important; }
+    
     .stFormSubmitButton > button { border-radius: 12px; border: none; padding: 0.75rem; font-size: 1.2rem; font-weight: 700; color: #111; background: #FF9900; transition: background 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); width: 100%; }
     .stFormSubmitButton > button:hover { background: #E77600; }
+    
     [data-testid="stSuccess"] { background-color: #3a4553; border: 1px solid #4dbd74; border-radius: 12px; padding: 1.5rem; text-align: center; }
     [data-testid="stSuccess"] strong { font-size: 2rem; color: #FFFFFF; }
+    
     .note-box { background-color: #3a4553; border: 1px solid #5a6b7d; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
-    .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 { color: #FFFFFF; }
 </style>
 """
 
@@ -74,7 +80,7 @@ with nav_col:
     )
 
 # === Page Content Logic ===
-st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
+# The <div class="content-wrapper"> has been removed.
 
 if page == "Home":
     form_cols = st.columns([0.2, 0.6, 0.2])
@@ -167,7 +173,7 @@ elif page == "About":
     st.markdown("""
     This application is a web-based tool for predicting sales for the BigMart dataset, a popular dataset for practicing regression machine learning.
     #### Purpose
-    The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application using Streamlit. 
+    The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application. 
     It helps showcase how a machine learning model can be used to provide actionable insights for retail businesses.
     
     **Developer:** Tejas
@@ -180,6 +186,3 @@ elif page == "Contact":
     st.markdown("- **Developer:** Tejas")
     st.markdown("- **Email:** tejasnarkhede03@gmail.com")
     st.markdown("- **GitHub:** [github.com/tejasnarkhede2005](https://github.com)")
-
-st.markdown('</div>', unsafe_allow_html=True)
-
