@@ -167,7 +167,9 @@ elif page == "About":
     st.markdown("""
     This application is a web-based tool for predicting sales for the BigMart dataset, a popular dataset for practicing regression machine learning.
     #### Purpose
-    The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application using Streamlit. It helps showcase how a machine learning model can be used to provide actionable insights for retail businesses.
+    The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application using Streamlit. 
+    It helps showcase how a machine learning model can be used to provide actionable insights for retail businesses.
+    
     **Developer:** Tejas
     """)
 
@@ -176,7 +178,8 @@ elif page == "Contact":
     st.markdown("For any inquiries, feedback, or issues with the application, please reach out.")
     st.markdown("---")
     st.markdown("- **Developer:** Tejas")
-    st.markdown("- **Email:** tejas.dev@example.com")
-    st.markdown("- **GitHub:** [github.com/tejas-repo](https://github.com)")
+    st.markdown("- **Email:** tejasnarkhede03@gmail.com")
+    st.markdown("- **GitHub:** [github.com/tejasnarkhede2005](https://github.com)")
 
 st.markdown('</div>', unsafe_allow_html=True)
+
