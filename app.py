@@ -18,13 +18,13 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# === Custom CSS for Professional Styling ===
+# === Custom CSS for Professional Styling (No White) ===
 st.markdown("""
 <style>
     /* General Styles */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f2f6;
+        background-color: #f0f2f6; /* Light gray page background */
     }
     
     /* Main container styling */
@@ -41,18 +41,18 @@ st.markdown("""
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #ffffff;
+        background-color: #e9f2ff; /* Light Blue Background */
         padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         z-index: 999;
     }
     .navbar-brand {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #1e3a8a; /* A deep blue color */
+        color: #1e3a8a; /* Deep blue color */
     }
 
     /* Title and Header Styles */
@@ -62,11 +62,12 @@ st.markdown("""
     
     /* Card/Container for the form */
     .form-container {
-        background-color: #ffffff;
+        background-color: #e9f2ff; /* Light Blue Background */
         padding: 2rem;
         border-radius: 10px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         margin-top: 2rem;
+        border: 1px solid #d1e3ff;
     }
 
     /* Input Widgets Styling */
@@ -74,15 +75,11 @@ st.markdown("""
     .stNumberInput > div > div > input,
     .stSelectbox > div > div {
         border-radius: 8px;
-        border: 1px solid #d1d5db;
+        border: 1px solid #b3c7e6;
         box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        background-color: #ffffff; /* Streamlit forces input backgrounds, but this styles the container */
     }
     
-    /* Slider styling */
-    .stSlider [data-baseweb="slider"] {
-        padding: 0.5rem 0;
-    }
-
     /* Button Styling */
     .stButton > button, .stFormSubmitButton > button {
         width: 100%;
@@ -103,8 +100,8 @@ st.markdown("""
     
     /* Success Box Styling */
     [data-testid="stSuccess"] {
-        background-color: #e0f2fe;
-        border-left: 5px solid #0ea5e9;
+        background-color: #dbeafe; /* Lighter blue */
+        border-left: 5px solid #2563eb;
         border-radius: 8px;
         padding: 1rem;
     }
@@ -122,9 +119,9 @@ st.markdown("""
     
     /* Expander Styling */
     .stExpander {
-        border: 1px solid #d1d5db;
+        border: 1px solid #d1e3ff;
         border-radius: 10px;
-        background-color: #fafafa;
+        background-color: #f0f7ff; /* A very light blue, almost gray */
     }
     
     /* Footer */
