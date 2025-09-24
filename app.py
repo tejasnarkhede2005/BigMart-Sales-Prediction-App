@@ -20,9 +20,27 @@ except FileNotFoundError:
     st.stop()
 
 # === THEME CSS ===
-# The app is now permanently in dark mode.
 dark_theme_css = """
 <style>
+    /* Custom Header Style */
+    .app-header {
+        background-color: #232F3E;
+        padding: 20px 10px;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border: 1px solid #3a4553;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .app-header h1 {
+        color: #FFFFFF;
+        text-align: center;
+        margin: 0;
+        font-family: 'Arial Black', Gadget, sans-serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+
     body { background-color: #131921; color: #FFFFFF; }
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
     .stTitle { text-align: center; }
@@ -52,7 +70,11 @@ dark_theme_css = """
 st.markdown(dark_theme_css, unsafe_allow_html=True)
 
 # === Header ===
-st.markdown("<h1 style='text-align: center; padding-top: 1rem;'>BigMart Sales Predictor</h1>", unsafe_allow_html=True)
+st.markdown("""
+<div class="app-header">
+    <h1>🛒 BigMart Sales Predictor</h1>
+</div>
+""", unsafe_allow_html=True)
 
 # === Top Navigation Bar (Centered) ===
 _, nav_col, _ = st.columns([0.2, 0.6, 0.2])
@@ -127,7 +149,7 @@ elif page == "Data Insights":
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)',
         font_color=font_color,
-        xaxis_tickangle=0, # This makes the x-axis labels horizontal
+        xaxis_tickangle=0, 
         title={
             'text': "Sales Distribution by Outlet Type",
             'y':0.9,
