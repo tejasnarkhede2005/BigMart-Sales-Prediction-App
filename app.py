@@ -90,10 +90,10 @@ with toggle_cols:
     theme_toggle = st.toggle('Dark Mode', value=(st.session_state.theme == 'dark'), key='theme_toggle')
     if theme_toggle and st.session_state.theme == 'light':
         st.session_state.theme = 'dark'
-        st.experimental_rerun()
+        st.rerun()
     elif not theme_toggle and st.session_state.theme == 'dark':
         st.session_state.theme = 'light'
-        st.experimental_rerun()
+        st.rerun()
 
 
 # === Top Navigation Bar ===
@@ -189,8 +189,8 @@ elif page == "Contact":
     st.markdown("For any inquiries, feedback, or issues with the application, please reach out.")
     st.markdown("---")
     st.markdown("- **Developer:** Tejas")
-    st.markdown("- **Email:** tejas.dev@example.com")
-    st.markdown("- **GitHub:** [github.com/tejas-repo](https://github.com)")
+    st.markdown("- **Email:** tejasnarkhede03@gmail.com")
+    st.markdown("- **GitHub:** https://github.com/tejasnarkhede2005")
 
 
 elif page == "Help":
