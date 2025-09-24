@@ -11,10 +11,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# === Initialize Session State for Theme Toggle ===
-if 'theme' not in st.session_state:
-    st.session_state.theme = 'light' # Default to dark theme UI
-
 # === Load Model and Version Info from Pickle ===
 try:
     with open("bigmart_best_model.pkl", "rb") as f:
@@ -24,8 +20,8 @@ except FileNotFoundError:
     st.stop()
 
 # === THEME CSS ===
-# light_theme_css holds the DARK THEME styles
-light_theme_css = """
+# The app is now permanently in dark mode.
+dark_theme_css = """
 <style>
     body { background-color: #131921; color: #FFFFFF; }
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
@@ -52,55 +48,11 @@ light_theme_css = """
 </style>
 """
 
-# dark_theme_css holds the LIGHT THEME styles
-dark_theme_css = """
-<style>
-    body { background-color: #FFFFFF; color: #0F1111 !important; }
-    .block-container { padding: 2rem 3rem 3rem 3rem !important; }
-    .stTitle { text-align: center; color: #131921;}
-    .content-wrapper { background-color: #F7F7F7; padding: 2rem 2.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #DDD; }
-    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
-    
-    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #555 !important; }
-    div[role="radiogroup"] input[type="radio"] { display: none; }
-    div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921 !important; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #EAEAEA; color: #000 !important; }
-    
-    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #0F1111 !important; }
-    
-    .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #a6a6a6; box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset; background-color: #FFFFFF; color: #0F1111; font-size: 1rem; }
-    .stSelectbox svg { fill: #0F1111 !important; }
-    .stTextInput > div > div > input:focus, .stNumberInput > div > div > input:focus, .stSelectbox > div > div:focus-within { border-color: #E77600; box-shadow: 0 0 0 3px #fcf4e8, 0 1px 2px rgba(0,0,0,0.05) inset; }
-    .stSlider .stThumb { background-color: #E77600; }
-    .stSlider .stTrack { background-color: #a6a6a6; }
-    .stSlider .stSliderLabel, .stSlider .stTickBar > div { color: #0F1111 !important; }
+# Apply the dark theme CSS
+st.markdown(dark_theme_css, unsafe_allow_html=True)
 
-    .stFormSubmitButton > button { border-radius: 12px; border: 1px solid #a88734; padding: 0.75rem; font-size: 1.2rem; font-weight: 700; color: #111; background: linear-gradient(to bottom, #f7dfa5, #f0c14b); transition: background 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 100%; }
-    .stFormSubmitButton > button:hover { background: linear-gradient(to bottom, #f5d78e, #eeb933); }
-    [data-testid="stSuccess"] { background-color: #f2fafa; border: 1px solid #007185; border-radius: 12px; padding: 1.5rem; text-align: center; }
-    [data-testid="stSuccess"] strong { font-size: 2rem; color: #0F1111; }
-    .note-box { background-color: #f2f7fa; border: 1px solid #c7e3f1; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
-    .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 { color: #0F1111; }
-</style>
-"""
-
-# Apply the selected theme based on the inverted logic
-st.markdown(dark_theme_css if st.session_state.theme == 'dark' else light_theme_css, unsafe_allow_html=True)
-
-# === Header and Theme Toggle ===
-title_cols, toggle_cols = st.columns([0.9, 0.1])
-with title_cols:
-    st.markdown("<h1 style='text-align: center; padding-top: 1rem;'>BigMart Sales Predictor</h1>", unsafe_allow_html=True)
-
-with toggle_cols:
-    theme_toggle = st.toggle('Dark Mode', value=(st.session_state.theme == 'dark'), key='theme_toggle')
-    if theme_toggle and st.session_state.theme == 'light':
-        st.session_state.theme = 'dark'
-        st.rerun()
-    elif not theme_toggle and st.session_state.theme == 'dark':
-        st.session_state.theme = 'light'
-        st.rerun()
-
+# === Header ===
+st.markdown("<h1 style='text-align: center; padding-top: 1rem;'>BigMart Sales Predictor</h1>", unsafe_allow_html=True)
 
 # === Top Navigation Bar (Centered) ===
 _, nav_col, _ = st.columns([0.2, 0.6, 0.2])
@@ -159,9 +111,9 @@ elif page == "Data Insights":
         'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]
     })
 
-    # Determine colors based on the current theme
-    font_color = "#FFFFFF" if st.session_state.theme == 'light' else "#0F1111"
-    bar_color = "#FF9900" if st.session_state.theme == 'light' else "#E77600"
+    # Set chart colors for the dark theme
+    font_color = "#FFFFFF"
+    bar_color = "#FF9900"
 
     # Create a Plotly figure
     fig = px.bar(
