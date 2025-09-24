@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import plotly.express as px
 
 # === App Configuration ===
 st.set_page_config(
@@ -147,9 +148,42 @@ elif page == "Data Insights":
     st.header("Exploratory Data Insights")
     st.markdown("This section provides a brief overview of the BigMart sales dataset.")
     st.markdown("---")
-    st.subheader("Sales Distribution by Outlet Type")
-    chart_data = pd.DataFrame({'Outlet Type': ['Supermarket Type1', 'Grocery Store', 'Supermarket Type3', 'Supermarket Type2'],'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]})
-    st.bar_chart(chart_data, x='Outlet Type', y='Total Sales (in Millions ₹)')
+    
+    chart_data = pd.DataFrame({
+        'Outlet Type': ['Supermarket Type1', 'Grocery Store', 'Supermarket Type3', 'Supermarket Type2'],
+        'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]
+    })
+
+    # Determine colors based on the current theme
+    font_color = "#FFFFFF" if st.session_state.theme == 'light' else "#0F1111"
+    bar_color = "#FF9900" if st.session_state.theme == 'light' else "#E77600"
+
+    # Create a Plotly figure
+    fig = px.bar(
+        chart_data,
+        x='Outlet Type',
+        y='Total Sales (in Millions ₹)'
+    )
+    
+    # Update layout for theme and horizontal labels
+    fig.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        font_color=font_color,
+        xaxis_tickangle=0, # This makes the x-axis labels horizontal
+        title={
+            'text': "Sales Distribution by Outlet Type",
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'
+        }
+    )
+    # Update trace for bar color
+    fig.update_traces(marker_color=bar_color)
+
+    st.plotly_chart(fig, use_container_width=True)
+
     st.markdown("`Supermarket Type1` outlets account for the majority of sales, followed by `Supermarket Type3`. `Grocery Stores` have significantly lower sales.")
 
 elif page == "Model Details":
