@@ -96,13 +96,15 @@ with toggle_cols:
         st.rerun()
 
 
-# === Top Navigation Bar ===
-page = st.radio(
-    "Navigation",
-    ["Home", "Data Insights", "Feature Explanations", "Model Details", "About", "Contact"],
-    horizontal=True,
-    label_visibility="collapsed"
-)
+# === Top Navigation Bar (Centered) ===
+_, nav_col, _ = st.columns([0.15, 0.7, 0.15])
+with nav_col:
+    page = st.radio(
+        "Navigation",
+        ["Home", "Data Insights", "Feature Explanations", "Model Details", "About", "Contact"],
+        horizontal=True,
+        label_visibility="collapsed"
+    )
 
 # === Page Content Logic ===
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
