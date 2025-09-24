@@ -12,7 +12,6 @@ st.set_page_config(
 )
 
 # === Initialize Session State for Theme Toggle ===
-# Note: The logic is now inverted as requested. 'dark' theme state = light UI.
 if 'theme' not in st.session_state:
     st.session_state.theme = 'light' # Default to dark theme UI
 
@@ -24,8 +23,8 @@ except FileNotFoundError:
     st.error("Error: 'bigmart_best_model.pkl' not found. Please ensure the model file is in the correct directory.")
     st.stop()
 
-# === THEME CSS (LOGIC INVERTED) ===
-# light_theme_css now holds the DARK THEME styles
+# === THEME CSS ===
+# light_theme_css holds the DARK THEME styles
 light_theme_css = """
 <style>
     body { background-color: #131921; color: #FFFFFF; }
@@ -53,7 +52,7 @@ light_theme_css = """
 </style>
 """
 
-# dark_theme_css now holds the LIGHT THEME styles
+# dark_theme_css holds the LIGHT THEME styles
 dark_theme_css = """
 <style>
     body { background-color: #FFFFFF; color: #0F1111; }
@@ -65,12 +64,19 @@ dark_theme_css = """
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #EAEAEA; color: #000; }
-    .stTextInput label, .stNumberInput label, .stSelectbox label { font-weight: 600; color: #0F1111; }
+    
+    /* MODIFICATION 1: Added .stSlider label to make slider titles visible */
+    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #0F1111; }
+    
     .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #a6a6a6; box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset; background-color: #FFFFFF; color: #0F1111; font-size: 1rem; }
     .stSelectbox svg { fill: #0F1111 !important; }
     .stTextInput > div > div > input:focus, .stNumberInput > div > div > input:focus, .stSelectbox > div > div:focus-within { border-color: #E77600; box-shadow: 0 0 0 3px #fcf4e8, 0 1px 2px rgba(0,0,0,0.05) inset; }
     .stSlider .stThumb { background-color: #E77600; }
     .stSlider .stTrack { background-color: #a6a6a6; }
+    
+    /* MODIFICATION 2: Added this rule to make the slider's value visible */
+    .stSlider .stSliderLabel, .stSlider .stTickBar > div { color: #0F1111 !important; }
+
     .stFormSubmitButton > button { border-radius: 12px; border: 1px solid #a88734; padding: 0.75rem; font-size: 1.2rem; font-weight: 700; color: #111; background: linear-gradient(to bottom, #f7dfa5, #f0c14b); transition: background 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 100%; }
     .stFormSubmitButton > button:hover { background: linear-gradient(to bottom, #f5d78e, #eeb933); }
     [data-testid="stSuccess"] { background-color: #f2fafa; border: 1px solid #007185; border-radius: 12px; padding: 1.5rem; text-align: center; }
@@ -212,17 +218,5 @@ elif page == "Contact":
     st.markdown("- **Developer:** Tejas")
     st.markdown("- **Email:** tejas.dev@example.com")
     st.markdown("- **GitHub:** [github.com/tejas-repo](https://github.com)")
-
-
-elif page == "Help":
-    st.header("Help & Instructions")
-    st.markdown("""
-    #### How to Use
-    1.  **Navigate:** Use the top navigation bar to switch between pages.
-    2.  **Fill the Form:** On the **Home** screen, enter all the details for the product and the store.
-    3.  **Predict:** Click the **"Predict Sales"** button.
-    4.  **View Result:** The estimated sales amount will appear below the form.
-    5.  **Change Theme:** Use the "Dark Mode" toggle at the top right. Toggling it ON enables light mode, and OFF enables dark mode.
-    """)
 
 st.markdown('</div>', unsafe_allow_html=True)
