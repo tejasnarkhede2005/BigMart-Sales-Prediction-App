@@ -16,15 +16,17 @@ st.set_page_config(
     page_icon="🛒",
     layout="wide",
     initial_sidebar_state="collapsed"
+    # theme="dark" # You can explicitly set this if you want to force dark mode
 )
 
-# === Custom CSS for Professional Styling (No White) ===
+# === Custom CSS for Professional Styling (Grey/Dark Theme) ===
 st.markdown("""
 <style>
-    /* General Styles */
+    /* General Styles for Dark Theme */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f2f6; /* Light gray page background */
+        background-color: #1e1e1e; /* Dark background for the page */
+        color: #e0e0e0; /* Light text color */
     }
     
     /* Main container styling */
@@ -41,45 +43,83 @@ st.markdown("""
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #e9f2ff; /* Light Blue Background */
+        background-color: #2b2b2b; /* Darker grey for navbar */
         padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         z-index: 999;
     }
     .navbar-brand {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #1e3a8a; /* Deep blue color */
+        color: #90caf9; /* Light blue for brand in dark theme */
     }
 
-    /* Title and Header Styles */
-    h1, h2, h3 {
-        color: #1e3a8a;
+    /* Streamlit Title and markdown text */
+    h1, h2, h3, h4, h5, h6 {
+        color: #90caf9; /* Light blue for headers */
+    }
+    .stMarkdown {
+        color: #e0e0e0; /* Light text color for general markdown */
     }
     
     /* Card/Container for the form */
     .form-container {
-        background-color: #e9f2ff; /* Light Blue Background */
+        background-color: #2b2b2b; /* Darker grey for form container */
         padding: 2rem;
         border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         margin-top: 2rem;
-        border: 1px solid #d1e3ff;
+        border: 1px solid #4a4a4a; /* Slightly lighter border */
     }
 
-    /* Input Widgets Styling */
+    /* Input Widgets Styling - Target internal elements for background */
     .stTextInput > div > div > input,
     .stNumberInput > div > div > input,
-    .stSelectbox > div > div {
+    .stSelectbox > div > div > button, /* For the selectbox display button */
+    .stSelectbox > div > div { /* For the overall selectbox container */
         border-radius: 8px;
-        border: 1px solid #b3c7e6;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        background-color: #ffffff; /* Streamlit forces input backgrounds, but this styles the container */
+        border: 1px solid #666666; /* Grey border */
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        background-color: #3a3a3a; /* Dark grey for input background */
+        color: #e0e0e0; /* Light text color inside inputs */
     }
     
+    /* Specific styling for the text input and number input elements */
+    .stTextInput input[type="text"],
+    .stNumberInput input[type="number"] {
+        background-color: #3a3a3a !important; /* Force dark grey background */
+        color: #e0e0e0 !important; /* Force light text color */
+    }
+
+    /* Streamlit's internal element for selectbox options if it exists */
+    .stSelectbox div[role="listbox"] div {
+        background-color: #3a3a3a; /* Dark grey for selectbox options */
+        color: #e0e0e0;
+    }
+     .stSelectbox ul { /* Target the dropdown menu itself */
+        background-color: #3a3a3a !important;
+        color: #e0e0e0 !important;
+    }
+    .stSelectbox li:hover { /* Hover effect for dropdown options */
+        background-color: #4a4a4a !important;
+        color: #90caf9 !important;
+    }
+
+
+    /* Slider styling */
+    .stSlider [data-baseweb="slider"] {
+        padding: 0.5rem 0;
+    }
+    .stSlider .stTickBar div {
+        background-color: #666666; /* Grey for slider track */
+    }
+    .stSlider .stThumb {
+        background-color: #90caf9; /* Light blue for slider thumb */
+    }
+
     /* Button Styling */
     .stButton > button, .stFormSubmitButton > button {
         width: 100%;
@@ -100,30 +140,37 @@ st.markdown("""
     
     /* Success Box Styling */
     [data-testid="stSuccess"] {
-        background-color: #dbeafe; /* Lighter blue */
-        border-left: 5px solid #2563eb;
+        background-color: #334d5c; /* Darker blue-grey for success */
+        border-left: 5px solid #4fc3f7; /* Lighter blue border */
         border-radius: 8px;
         padding: 1rem;
+        color: #e0e0e0;
     }
     
     /* Note Box Styling */
     .note-box {
-        background-color: #fefce8; /* Light yellow */
+        background-color: #4a4234; /* Darker yellow-brown */
         border: 1px solid #facc15; /* Yellow border */
         border-radius: 8px;
         padding: 1rem;
         margin-top: 1rem;
         font-size: 0.9rem;
-        color: #713f12; /* Dark yellow text */
+        color: #e0e0e0; /* Light text */
     }
     
     /* Expander Styling */
     .stExpander {
-        border: 1px solid #d1e3ff;
+        border: 1px solid #4a4a4a;
         border-radius: 10px;
-        background-color: #f0f7ff; /* A very light blue, almost gray */
+        background-color: #2b2b2b; /* Dark grey for expander */
     }
-    
+    .stExpander > div > div > button { /* Expander header button */
+        color: #90caf9; /* Light blue text for expander header */
+    }
+    .stExpander > div > div {
+        color: #e0e0e0; /* Content inside expander */
+    }
+
     /* Footer */
     footer {
         text-align: center;
