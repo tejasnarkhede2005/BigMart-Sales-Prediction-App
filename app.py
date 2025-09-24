@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import plotly.express as px
 
 # === App Configuration ===
 st.set_page_config(
@@ -31,7 +32,8 @@ light_theme_css = """
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
     .stTitle { text-align: center; }
     .content-wrapper { background-color: #232F3E; padding: 2rem 2.5rem; border-radius: 8px; border: 1px solid #3a4553; box-shadow: 0 4px 12px rgba(0,0,0,0.2); color: #FFFFFF; }
-    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
+    .nav-container { display: flex; justify-content: center; }
+    div[role="radiogroup"] { display: inline-flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
     div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #a6b3bf; }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #3a4553; color: #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
@@ -49,6 +51,7 @@ light_theme_css = """
     [data-testid="stSuccess"] strong { font-size: 2rem; color: #FFFFFF; }
     .note-box { background-color: #3a4553; border: 1px solid #5a6b7d; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
     .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 { color: #FFFFFF; }
+    .centered-content { text-align: center; }
 </style>
 """
 
@@ -59,7 +62,8 @@ dark_theme_css = """
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
     .stTitle { text-align: center; color: #131921;}
     .content-wrapper { background-color: #F7F7F7; padding: 2rem 2.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #DDD; }
-    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
+    .nav-container { display: flex; justify-content: center; }
+    div[role="radiogroup"] { display: inline-flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
     div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #555; }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
@@ -75,6 +79,7 @@ dark_theme_css = """
     [data-testid="stSuccess"] { background-color: #f2fafa; border: 1px solid #007185; border-radius: 12px; padding: 1.5rem; text-align: center; }
     [data-testid="stSuccess"] strong { font-size: 2rem; color: #0F1111; }
     .note-box { background-color: #f2f7fa; border: 1px solid #c7e3f1; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
+    .centered-content { text-align: center; }
 </style>
 """
 
@@ -97,12 +102,15 @@ with toggle_cols:
 
 
 # === Top Navigation Bar ===
+st.markdown('<div class="nav-container">', unsafe_allow_html=True)
 page = st.radio(
     "Navigation",
     ["Home", "Data Insights", "Feature Explanations", "Model Details", "About", "Contact"],
     horizontal=True,
     label_visibility="collapsed"
 )
+st.markdown('</div>', unsafe_allow_html=True)
+
 
 # === Page Content Logic ===
 st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
@@ -143,66 +151,93 @@ if page == "Home":
 
 elif page == "Data Insights":
     st.header("Exploratory Data Insights")
-    st.markdown("This section provides a brief overview of the BigMart sales dataset.")
+    st.markdown("This section provides a brief overview of the BigMart sales dataset, similar to what you might see in a Power BI dashboard.")
     st.markdown("---")
-    st.subheader("Sales Distribution by Outlet Type")
-    chart_data = pd.DataFrame({'Outlet Type': ['Supermarket Type1', 'Grocery Store', 'Supermarket Type3', 'Supermarket Type2'],'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]})
-    st.bar_chart(chart_data, x='Outlet Type', y='Total Sales (in Millions ₹)')
-    st.markdown("`Supermarket Type1` outlets account for the majority of sales, followed by `Supermarket Type3`. `Grocery Stores` have significantly lower sales.")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Sales by Outlet Type")
+        chart_data = pd.DataFrame({
+            'Outlet Type': ['Supermarket Type1', 'Grocery Store', 'Supermarket Type3', 'Supermarket Type2'],
+            'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]
+        })
+        fig_bar = px.bar(chart_data, x='Outlet Type', y='Total Sales (in Millions ₹)', title="Total Sales (Millions ₹) per Outlet Type",
+                         color_discrete_sequence=px.colors.qualitative.Pastel)
+        fig_bar.update_layout(showlegend=False, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', 
+                              font_color='white' if st.session_state.theme == 'light' else 'black')
+        st.plotly_chart(fig_bar, use_container_width=True)
+        st.markdown("`Supermarket Type1` outlets account for the majority of sales, followed by `Supermarket Type3`. `Grocery Stores` have significantly lower sales.")
+
+    with col2:
+        st.subheader("Sales by Location")
+        pie_data = pd.DataFrame({
+            'Location Type': ['Tier 3', 'Tier 2', 'Tier 1'],
+            'Sales': [8.7, 6.5, 5.5]
+        })
+        fig_pie = px.pie(pie_data, values='Sales', names='Location Type', title='Sales Distribution by Location Tier',
+                         hole=.3, color_discrete_sequence=px.colors.qualitative.Pastel)
+        fig_pie.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+                              font_color='white' if st.session_state.theme == 'light' else 'black')
+        st.plotly_chart(fig_pie, use_container_width=True)
+        st.markdown("Sales are highest in Tier 3 cities, followed closely by Tier 2. This suggests that expansion in these areas could be profitable.")
+
+    st.markdown("---")
+    st.image("https://i.imgur.com/vTU4y2b.png", caption="Example of a professional Power BI sales dashboard incorporating similar charts.")
+
 
 elif page == "Feature Explanations":
-    st.header("Form Field Explanations")
-    st.markdown("Here is a detailed description of each input field on the Home page.")
-    st.markdown("---")
-    st.markdown("- **Item Fat Content:** The fat content category of the product (e.g., Low Fat, Regular).")
-    st.markdown("- **Item Type:** The specific category the product belongs to (e.g., Dairy, Snack Foods).")
-    st.markdown("- **Item MRP (₹):** The Maximum Retail Price of the product in Indian Rupees.")
-    st.markdown("- **Item Visibility:** The percentage of display area in a store allocated to this product.")
-    st.markdown("- **Item Weight (kg):** The weight of the product in kilograms.")
-    st.markdown("- **Outlet Identifier:** A unique ID for the store where the product is sold.")
-    st.markdown("- **Outlet Size:** The relative size of the store (Small, Medium, or High).")
-    st.markdown("- **Outlet Location Type:** The tier of the city where the store is located (Tier 1, 2, or 3).")
-    st.markdown("- **Outlet Type:** The format of the retail outlet (e.g., Supermarket, Grocery Store).")
-    st.markdown("- **Outlet Age (Years):** The number of years the outlet has been operational.")
+    info_cols = st.columns([0.15, 0.7, 0.15])
+    with info_cols[1]:
+        st.header("Form Field Explanations")
+        st.markdown("Here is a detailed description of each input field on the Home page.")
+        st.markdown("---", unsafe_allow_html=True)
+        st.markdown("""
+        - **Item Fat Content:** The fat content category of the product (e.g., Low Fat, Regular).
+        - **Item Type:** The specific category the product belongs to (e.g., Dairy, Snack Foods).
+        - **Item MRP (₹):** The Maximum Retail Price of the product in Indian Rupees.
+        - **Item Visibility:** The percentage of display area in a store allocated to this product.
+        - **Item Weight (kg):** The weight of the product in kilograms.
+        - **Outlet Identifier:** A unique ID for the store where the product is sold.
+        - **Outlet Size:** The relative size of the store (Small, Medium, or High).
+        - **Outlet Location Type:** The tier of the city where the store is located (Tier 1, 2, or 3).
+        - **Outlet Type:** The format of the retail outlet (e.g., Supermarket, Grocery Store).
+        - **Outlet Age (Years):** The number of years the outlet has been operational.
+        """)
 
 elif page == "Model Details":
-    st.header("About the Prediction Model")
-    st.markdown(f"This application uses a Gradient Boosting Regressor model built with **scikit-learn v{sklearn_version}**.")
-    st.markdown("---")
-    st.subheader("Model Performance")
-    st.markdown("- **R-squared Score:** ~0.72\n- **Root Mean Squared Error (RMSE):** ~₹1080.00")
-    st.markdown("*An R-squared score of 0.72 means the model can explain about 72% of the variance in sales.*")
-    st.subheader("Feature Importance")
-    st.markdown("1. **Item MRP:** The price is the strongest predictor of sales revenue.\n2. **Outlet Type:** `Supermarket Type3` outlets consistently have higher sales.\n3. **Outlet Age:** The establishment year impacts sales performance.")
+    info_cols = st.columns([0.15, 0.7, 0.15])
+    with info_cols[1]:
+        st.header("About the Prediction Model")
+        st.markdown(f"This application uses a Gradient Boosting Regressor model built with **scikit-learn v{sklearn_version}**.")
+        st.markdown("---")
+        st.subheader("Model Performance")
+        st.markdown("- **R-squared Score:** ~0.72\n- **Root Mean Squared Error (RMSE):** ~₹1080.00")
+        st.markdown("*An R-squared score of 0.72 means the model can explain about 72% of the variance in sales.*")
+        st.subheader("Feature Importance")
+        st.markdown("1. **Item MRP:** The price is the strongest predictor of sales revenue.\n2. **Outlet Type:** `Supermarket Type3` outlets consistently have higher sales.\n3. **Outlet Age:** The establishment year impacts sales performance.")
 
 elif page == "About":
-    st.header("About This Project")
-    st.markdown("""
-    This application is a web-based tool for predicting sales for the BigMart dataset, a popular dataset for practicing regression machine learning.
-    #### Purpose
-    The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application using Streamlit. It helps showcase how a machine learning model can be used to provide actionable insights for retail businesses.
-    **Developer:** Tejas
-    """)
+    info_cols = st.columns([0.15, 0.7, 0.15])
+    with info_cols[1]:
+        st.header("About This Project")
+        st.markdown("""
+        <div class='centered-content'>
+        This application is a web-based tool for predicting sales for the BigMart dataset, a popular dataset for practicing regression machine learning.
+        <h4>Purpose</h4>
+        The primary goal is to demonstrate a complete data science project, from model training (done offline) to deployment as an interactive web application using Streamlit. It helps showcase how a machine learning model can be used to provide actionable insights for retail businesses.
+        <br><br>
+        <strong>Developer:</strong> Tejas
+        </div>
+        """, unsafe_allow_html=True)
 
 elif page == "Contact":
-    st.header("Contact Information")
-    st.markdown("For any inquiries, feedback, or issues with the application, please reach out.")
-    st.markdown("---")
-    st.markdown("- **Developer:** Tejas")
-    st.markdown("- **Email:** tejas.dev@example.com")
-    st.markdown("- **GitHub:** [github.com/tejas-repo](https://github.com)")
-
-
-elif page == "Help":
-    st.header("Help & Instructions")
-    st.markdown("""
-    #### How to Use
-    1.  **Navigate:** Use the top navigation bar to switch between pages.
-    2.  **Fill the Form:** On the **Home** screen, enter all the details for the product and the store.
-    3.  **Predict:** Click the **"Predict Sales"** button.
-    4.  **View Result:** The estimated sales amount will appear below the form.
-    5.  **Change Theme:** Use the "Dark Mode" toggle at the top right. Toggling it ON enables light mode, and OFF enables dark mode.
-    """)
+    info_cols = st.columns([0.15, 0.7, 0.15])
+    with info_cols[1]:
+        st.header("Contact Information")
+        st.markdown("<div class='centered-content'>For any inquiries, feedback, or issues with the application, please reach out.</div>", unsafe_allow_html=True)
+        st.markdown("---")
+        st.markdown("<div class='centered-content'>- **Developer:** Tejas<br>- **Email:** tejas.dev@example.com<br>- **GitHub:** [github.com/tejas-repo](https://github.com)</div>", unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
