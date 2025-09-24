@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # === Initialize Session State for Theme Toggle ===
-# Note: The logic is now inverted as requested. 'dark' theme state = light UI.
+# Note: The logic is inverted. 'dark' theme state = light UI.
 if 'theme' not in st.session_state:
     st.session_state.theme = 'light' # Default to dark theme UI
 
@@ -31,12 +31,13 @@ light_theme_css = """
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
     .stTitle { text-align: center; }
     .content-wrapper { background-color: #232F3E; padding: 2rem 2.5rem; border-radius: 8px; border: 1px solid #3a4553; box-shadow: 0 4px 12px rgba(0,0,0,0.2); color: #FFFFFF; }
-    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
-    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #a6b3bf; }
+    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
+    div[data-testid="stForm"] div[role="radiogroup"] { margin-bottom: 2rem; } /* More space for form radio */
+    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1rem; color: #a6b3bf; }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #3a4553; color: #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #3a4553; color: #FFFFFF; }
-    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #FFFFFF; }
+    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label, div[data-testid="stForm"] .stRadio label { font-weight: 600; color: #FFFFFF; }
     .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #5a6b7d; box-shadow: 0 1px 2px rgba(0,0,0,0.1) inset; background-color: #3a4553; font-size: 1rem; color: #FFFFFF; }
     .stSelectbox svg { fill: #FFFFFF !important; }
     .stTextInput > div > div > input:focus, .stNumberInput > div > div > input:focus, .stSelectbox > div > div:focus-within { border-color: #FF9900; box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.2); }
@@ -59,12 +60,13 @@ dark_theme_css = """
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
     .stTitle { text-align: center; color: #131921;}
     .content-wrapper { background-color: #F7F7F7; padding: 2rem 2.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #DDD; }
-    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
-    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #555; }
+    div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
+    div[data-testid="stForm"] div[role="radiogroup"] { margin-bottom: 2rem; } /* More space for form radio */
+    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1rem; color: #555; }
     div[role="radiogroup"] input[type="radio"] { display: none; }
     div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
     div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #EAEAEA; color: #000; }
-    .stTextInput label, .stNumberInput label, .stSelectbox label { font-weight: 600; color: #0F1111; }
+    .stTextInput label, .stNumberInput label, .stSelectbox label, div[data-testid="stForm"] .stRadio label { font-weight: 600; color: #0F1111; }
     .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #a6a6a6; box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset; background-color: #FFFFFF; color: #0F1111; font-size: 1rem; }
     .stSelectbox svg { fill: #0F1111 !important; }
     .stTextInput > div > div > input:focus, .stNumberInput > div > div > input:focus, .stSelectbox > div > div:focus-within { border-color: #E77600; box-shadow: 0 0 0 3px #fcf4e8, 0 1px 2px rgba(0,0,0,0.05) inset; }
@@ -75,6 +77,7 @@ dark_theme_css = """
     [data-testid="stSuccess"] { background-color: #f2fafa; border: 1px solid #007185; border-radius: 12px; padding: 1.5rem; text-align: center; }
     [data-testid="stSuccess"] strong { font-size: 2rem; color: #0F1111; }
     .note-box { background-color: #f2f7fa; border: 1px solid #c7e3f1; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
+    .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 { color: #131921; }
 </style>
 """
 
@@ -126,7 +129,13 @@ if page == "Home":
             st.selectbox("🏪 Outlet Identifier", ["OUT027", "OUT013", "OUT049", "OUT035", "OUT046", "OUT017", "OUT045", "OUT018", "OUT019", "OUT010"], key="Outlet_Identifier")
             st.selectbox("📏 Outlet Size", ["Small", "Medium", "High"], key="Outlet_Size")
             st.selectbox("🌍 Outlet Location Type", ["Tier 1", "Tier 2", "Tier 3"], key="Outlet_Location_Type")
-            st.selectbox("🏬 Outlet Type", ["Supermarket Type1", "Supermarket Type2", "Supermarket Type3", "Grocery Store"], key="Outlet_Type")
+            
+            # --- Changed Outlet Type to horizontal radio buttons ---
+            st.radio("🏬 Outlet Type", 
+                     ["Supermarket Type1", "Supermarket Type2", "Supermarket Type3", "Grocery Store"], 
+                     key="Outlet_Type", 
+                     horizontal=True)
+            
             st.slider("📅 Outlet Age (Years)", 0, 40, 15, key="Outlet_Age")
             st.markdown("<br>", unsafe_allow_html=True)
             submit = st.form_submit_button("Predict Sales")
@@ -178,17 +187,5 @@ elif page == "Contact":
     st.markdown("- **Developer:** Tejas")
     st.markdown("- **Email:** tejas.dev@example.com")
     st.markdown("- **GitHub:** [github.com/tejas-repo](https://github.com)")
-
-
-elif page == "Help":
-    st.header("Help & Instructions")
-    st.markdown("""
-    #### How to Use
-    1.  **Navigate:** Use the top navigation bar to switch between pages.
-    2.  **Fill the Form:** On the **Home** screen, enter all the details for the product and the store.
-    3.  **Predict:** Click the **"Predict Sales"** button.
-    4.  **View Result:** The estimated sales amount will appear below the form.
-    5.  **Change Theme:** Use the "Dark Mode" toggle at the top right. Toggling it ON enables light mode, and OFF enables dark mode.
-    """)
 
 st.markdown('</div>', unsafe_allow_html=True)
