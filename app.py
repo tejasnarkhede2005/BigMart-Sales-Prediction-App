@@ -97,11 +97,11 @@ with toggle_cols:
 
 
 # === Top Navigation Bar (Centered) ===
-_, nav_col, _ = st.columns([0.15, 0.7, 0.15])
+_, nav_col, _ = st.columns([0.2, 0.6, 0.2])
 with nav_col:
     page = st.radio(
         "Navigation",
-        ["Home", "Data Insights", "Feature Explanations", "Model Details", "About", "Contact"],
+        ["Home", "Data Insights", "Model Details", "About", "Contact"],
         horizontal=True,
         label_visibility="collapsed"
     )
@@ -151,21 +151,6 @@ elif page == "Data Insights":
     chart_data = pd.DataFrame({'Outlet Type': ['Supermarket Type1', 'Grocery Store', 'Supermarket Type3', 'Supermarket Type2'],'Total Sales (in Millions ₹)': [12.9, 0.24, 8.5, 4.5]})
     st.bar_chart(chart_data, x='Outlet Type', y='Total Sales (in Millions ₹)')
     st.markdown("`Supermarket Type1` outlets account for the majority of sales, followed by `Supermarket Type3`. `Grocery Stores` have significantly lower sales.")
-
-elif page == "Feature Explanations":
-    st.header("Form Field Explanations")
-    st.markdown("Here is a detailed description of each input field on the Home page.")
-    st.markdown("---")
-    st.markdown("- **Item Fat Content:** The fat content category of the product (e.g., Low Fat, Regular).")
-    st.markdown("- **Item Type:** The specific category the product belongs to (e.g., Dairy, Snack Foods).")
-    st.markdown("- **Item MRP (₹):** The Maximum Retail Price of the product in Indian Rupees.")
-    st.markdown("- **Item Visibility:** The percentage of display area in a store allocated to this product.")
-    st.markdown("- **Item Weight (kg):** The weight of the product in kilograms.")
-    st.markdown("- **Outlet Identifier:** A unique ID for the store where the product is sold.")
-    st.markdown("- **Outlet Size:** The relative size of the store (Small, Medium, or High).")
-    st.markdown("- **Outlet Location Type:** The tier of the city where the store is located (Tier 1, 2, or 3).")
-    st.markdown("- **Outlet Type:** The format of the retail outlet (e.g., Supermarket, Grocery Store).")
-    st.markdown("- **Outlet Age (Years):** The number of years the outlet has been operational.")
 
 elif page == "Model Details":
     st.header("About the Prediction Model")
