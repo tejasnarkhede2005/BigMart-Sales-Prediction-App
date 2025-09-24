@@ -60,12 +60,15 @@ dark_theme_css = """
     .stTitle { text-align: center; color: #131921;}
     .content-wrapper { background-color: #F7F7F7; padding: 2rem 2.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #DDD; }
     div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #F0F2F5; padding: 0.75rem; border-radius: 8px; }
-    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #555; }
-    div[role="radiogroup"] input[type="radio"] { display: none; }
-    div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #EAEAEA; color: #000; }
     
-    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #0F1111; }
+    /* === FIX 1: Made nav text color !important to ensure visibility === */
+    div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #555 !important; }
+    div[role="radiogroup"] input[type="radio"] { display: none; }
+    div[role="radiogroup"] label:has(input:checked) { background-color: #FF9900; color: #131921 !important; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    div[role="radiogroup"] label:not(:has(input:checked)):hover { background-color: #EAEAEA; color: #000 !important; }
+    
+    /* === FIX 2: Made form label color !important to ensure visibility === */
+    .stTextInput label, .stNumberInput label, .stSelectbox label, .stSlider label { font-weight: 600; color: #0F1111 !important; }
     
     .stTextInput > div > div > input, .stNumberInput > div > div > input, .stSelectbox > div > div { border-radius: 8px; border: 1px solid #a6a6a6; box-shadow: 0 1px 2px rgba(0,0,0,0.05) inset; background-color: #FFFFFF; color: #0F1111; font-size: 1rem; }
     .stSelectbox svg { fill: #0F1111 !important; }
@@ -79,9 +82,6 @@ dark_theme_css = """
     [data-testid="stSuccess"] { background-color: #f2fafa; border: 1px solid #007185; border-radius: 12px; padding: 1.5rem; text-align: center; }
     [data-testid="stSuccess"] strong { font-size: 2rem; color: #0F1111; }
     .note-box { background-color: #f2f7fa; border: 1px solid #c7e3f1; border-radius: 12px; padding: 1rem; margin-top: 1.5rem; }
-    
-    /* === FIX ADDED HERE === */
-    /* This rule makes headers inside the content box black in the light theme */
     .content-wrapper h1, .content-wrapper h2, .content-wrapper h3, .content-wrapper h4 { color: #0F1111; }
 </style>
 """
