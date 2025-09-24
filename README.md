@@ -22,7 +22,7 @@ graph TD
     F -- About/Contact --> J[Display Static Info];
 
     G --> K{User Fills Form?};
-    K -- Yes --> L[User Clicks "Predict"];
+    K -- Yes --> L[User Clicks Predict];
     L --> M[Process Form Data];
     M --> N[Predict Sales using Model];
     N --> O[Display Prediction Result];
@@ -31,4 +31,4 @@ graph TD
     H --> F;
     I --> F;
     J --> F;
-
+```
