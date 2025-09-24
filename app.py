@@ -22,19 +22,11 @@ except FileNotFoundError:
 # === THEME CSS ===
 dark_theme_css = """
 <style>
-    /* Custom Header Style */
-    .app-header {
-        background-color: #232F3E;
-        padding: 20px 10px;
-        border-radius: 8px;
-        margin-bottom: 2rem;
-        border: 1px solid #3a4553;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    .app-header h1 {
+    /* Custom Title Style */
+    .app-title {
         color: #FFFFFF;
         text-align: center;
-        margin: 0;
+        margin-bottom: 2rem;
         font-family: 'Arial Black', Gadget, sans-serif;
         font-size: 2.5rem;
         font-weight: 900;
@@ -43,7 +35,6 @@ dark_theme_css = """
 
     body { background-color: #131921; color: #FFFFFF; }
     .block-container { padding: 2rem 3rem 3rem 3rem !important; }
-    .stTitle { text-align: center; }
     .content-wrapper { background-color: #232F3E; padding: 2rem 2.5rem; border-radius: 8px; border: 1px solid #3a4553; box-shadow: 0 4px 12px rgba(0,0,0,0.2); color: #FFFFFF; }
     div[role="radiogroup"] { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; background-color: #131921; padding: 0.75rem; border-radius: 8px; border: 1px solid #3a4553; }
     div[role="radiogroup"] label { padding: 0.5rem 1.5rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-weight: 600; font-size: 1.1rem; color: #a6b3bf; }
@@ -70,11 +61,7 @@ dark_theme_css = """
 st.markdown(dark_theme_css, unsafe_allow_html=True)
 
 # === Header ===
-st.markdown("""
-<div class="app-header">
-    <h1>🛒 BigMart Sales Predictor</h1>
-</div>
-""", unsafe_allow_html=True)
+st.markdown('<h1 class="app-title">🛒 BigMart Sales Predictor</h1>', unsafe_allow_html=True)
 
 # === Top Navigation Bar (Centered) ===
 _, nav_col, _ = st.columns([0.2, 0.6, 0.2])
